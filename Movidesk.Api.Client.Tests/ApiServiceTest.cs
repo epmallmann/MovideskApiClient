@@ -104,7 +104,7 @@ namespace Movidesk.Api.Client.Tests
             Assert.True(postResult.InnerResponse.IsSuccessStatusCode);
             Assert.True(postResult.ResponseObject.Id.HasValue);
 
-            var result = client.Patch(postResult.ResponseObject.Id.Value, new Service { Name = "Another name" }).Result;
+            var result = client.Patch(postResult.ResponseObject.Id.Value, new Service { Name = $"test2_{Guid.NewGuid().ToString()}" }).Result;
 
             Assert.True(result.IsSuccessStatusCode);
         }
@@ -125,7 +125,7 @@ namespace Movidesk.Api.Client.Tests
         {
             return new Service
             {
-                Name = Guid.NewGuid().ToString(),
+                Name = $"test_{Guid.NewGuid().ToString()}",
                 Description = "Description",
                 IsVisible = ServiceVisibility.AgentAndClient,
                 ServiceForTicketType = ServiceTicketType.PublicAndInternal,

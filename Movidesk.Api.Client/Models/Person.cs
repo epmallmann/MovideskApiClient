@@ -6,6 +6,7 @@ using System.Text;
 
 namespace Movidesk.Api.Client.Models
 {
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Person
     {
         [JsonProperty("id")]
@@ -69,7 +70,7 @@ namespace Movidesk.Api.Client.Models
         public string CreatedBy { get; set; }
 
         [JsonProperty("changedDate")]
-        public DateTime ChangedDate { get; set; }
+        public DateTime? ChangedDate { get; set; }
 
         [JsonProperty("changedBy")]
         public string ChangedBy { get; set; }
