@@ -5,15 +5,12 @@ using System.Text;
 
 namespace Movidesk.Api.Client.Models
 {
-    public class PersonRelationshipService
+    public class TicketActionTimeAppointmentCreatedByTeam
     {
         [JsonProperty("id")]
         public int? Id { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }
-
-        [JsonProperty("copyToChildren")]
-        public bool? CopyToChildren { get; set; }
     }
 }

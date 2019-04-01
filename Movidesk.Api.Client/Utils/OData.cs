@@ -18,17 +18,17 @@ namespace Movidesk.Api.Client.Utils
             StringBuilder stringBuilder = new StringBuilder();
 
             if (!string.IsNullOrEmpty(Filter))
-                stringBuilder.Append($"$&$filter={Filter}");
+                stringBuilder.Append($"&$filter={Filter}");
             if (!string.IsNullOrEmpty(OrderBy))
-                stringBuilder.Append($"$&orderby={OrderBy}");
+                stringBuilder.Append($"&$orderby={OrderBy}");
             if (Top.HasValue)
-                stringBuilder.Append($"$&top={Top.Value}");
+                stringBuilder.Append($"&$top={Top.Value}");
             if (Skip.HasValue)
-                stringBuilder.Append($"$&skip={Skip.Value}");
+                stringBuilder.Append($"&$skip={Skip.Value}");
             if (!string.IsNullOrEmpty(Select))
-                stringBuilder.Append($"$&select={Select}");
+                stringBuilder.Append($"&$select={Select}");
             if (!string.IsNullOrEmpty(Expand))
-                stringBuilder.Append($"$&expand={Expand}");
+                stringBuilder.Append($"&$expand={Expand}");
 
             return stringBuilder.ToString();
         }

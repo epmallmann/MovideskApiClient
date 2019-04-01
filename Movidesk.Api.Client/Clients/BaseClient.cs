@@ -1,10 +1,5 @@
 ﻿using Movidesk.Api.Client.Http;
-using Movidesk.Api.Client.Models;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,7 +38,9 @@ namespace Movidesk.Api.Client.Clients
         {
             var httpClient = new HttpClient();
 
-            var response = await httpClient.PostAsJsonAsync(requestUri, content);
+            var contentJson = JsonConvert.SerializeObject(content);
+
+            var response = await httpClient.PostAsync(requestUri, new StringContent(contentJson, Encoding.GetEncoding("iso-8859-1"), "application/json"));
             var contentResult = await response.Content.ReadAsStringAsync();
 
             var result = new ApiResponse<T>

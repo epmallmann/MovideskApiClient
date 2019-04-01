@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Movidesk.Api.Client.Tests.Utils;
 using System;
 using System.Collections.Generic;
 using System.Text;

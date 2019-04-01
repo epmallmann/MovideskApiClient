@@ -78,24 +78,24 @@ namespace Movidesk.Api.Client.Models
         public string Observations { get; set; }
 
         [JsonProperty("addresses")]
-        public List<PersonAddress> Addresses { get; set; } = new List<PersonAddress>();
+        public List<PersonAddress> Addresses { get; set; }
 
         [JsonProperty("contacts")]
-        public List<PersonContact> Contacts { get; set; } = new List<PersonContact>();
+        public List<PersonContact> Contacts { get; set; }
 
         [JsonProperty("emails")]
-        public List<PersonEmail> Emails { get; set; } = new List<PersonEmail>();
+        public List<PersonEmail> Emails { get; set; }
 
         [JsonProperty("teams")]
-        public List<string> Teams { get; set; } = new List<string>();
+        public List<string> Teams { get; set; }
 
         [JsonProperty("relationships")]
-        public List<PersonRelationship> Relationships { get; set; } = new List<PersonRelationship>();
+        public List<PersonRelationship> Relationships { get; set; }
 
         [JsonProperty("customFieldValues")]
-        public List<PersonCustomFieldValue> CustomFieldValues { get; set; } = new List<PersonCustomFieldValue>();
+        public List<PersonCustomFieldValue> CustomFieldValues { get; set; }
 
         [JsonProperty("atAssets")]
-        public List<PersonAtAsset> AtAssets { get; set; } = new List<PersonAtAsset>();
+        public List<PersonAtAsset> AtAssets { get; set; }
     }
 }

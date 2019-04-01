@@ -1,12 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
-using Movidesk.Api.Client.Clients;
+﻿using Movidesk.Api.Client.Clients;
 using Movidesk.Api.Client.Enums;
 using Movidesk.Api.Client.Models;
 using Movidesk.Api.Client.Utils;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using Xunit;
 
 namespace Movidesk.Api.Client.Tests
@@ -42,10 +41,45 @@ namespace Movidesk.Api.Client.Tests
         }
 
         [Fact]
+        public void GetODataTop1Test()
+        {
+            var client = new ServicesClient(_options);
+            var result = client.Get(new OData { Top = 1 }).Result;
+
+            Assert.True(result.InnerResponse.IsSuccessStatusCode);
+            Assert.IsType<List<Service>>(result.ResponseObject);
+            Assert.True(result.ResponseObject.Count == 1);
+        }
+
+        [Fact]
+        public void GetODataSelectTest()
+        {
+            var client = new ServicesClient(_options);
+            var result = client.Get(new OData { Select = "name,id" }).Result;
+
+            Assert.True(result.InnerResponse.IsSuccessStatusCode);
+            Assert.IsType<List<Service>>(result.ResponseObject);
+            Assert.DoesNotContain(result.ResponseObject, x => !string.IsNullOrEmpty(x.Description));
+        }
+
+        [Fact]
         public void PostTest()
         {
             var client = new ServicesClient(_options);
+
+            var service = GetFakeService();
+
             var result = client.Post(GetFakeService()).Result;
+
+            Assert.True(result.InnerResponse.IsSuccessStatusCode);
+            Assert.IsType<Service>(result.ResponseObject);
+        }
+
+        [Fact]
+        public void PostReturnAllPropertiesTest()
+        {
+            var client = new ServicesClient(_options);
+            var result = client.Post(GetFakeService(), returnAllProperties: true).Result;
 
             Assert.True(result.InnerResponse.IsSuccessStatusCode);
             Assert.IsType<Service>(result.ResponseObject);
@@ -70,7 +104,7 @@ namespace Movidesk.Api.Client.Tests
             Assert.True(postResult.InnerResponse.IsSuccessStatusCode);
             Assert.True(postResult.ResponseObject.Id.HasValue);
 
-            var result = client.Patch(postResult.ResponseObject.Id.Value, new { name = "Another name" }).Result;
+            var result = client.Patch(postResult.ResponseObject.Id.Value, new Service { Name = "Another name" }).Result;
 
             Assert.True(result.IsSuccessStatusCode);
         }
@@ -91,10 +125,10 @@ namespace Movidesk.Api.Client.Tests
         {
             return new Service
             {
-                Name = "Nome",
+                Name = Guid.NewGuid().ToString(),
                 Description = "Description",
                 IsVisible = ServiceVisibility.AgentAndClient,
-                ServiceForTicketType = TicketType.PublicAndIntern,
+                ServiceForTicketType = ServiceTicketType.PublicAndInternal,
                 AllowSelection = ServiceSelection.AgentAndClient,
                 AllowFinishTicket = true,
                 IsActive = true,

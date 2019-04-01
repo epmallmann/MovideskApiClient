@@ -14,6 +14,6 @@ namespace Movidesk.Api.Client.Models
         public string Email { get; set; }
 
         [JsonProperty("isDefault")]
-        public bool IsDefault { get; set; }
+        public bool? IsDefault { get; set; }
     }
 }

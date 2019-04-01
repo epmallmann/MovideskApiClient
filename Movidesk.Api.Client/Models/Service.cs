@@ -6,9 +6,10 @@ using System.Text;
 
 namespace Movidesk.Api.Client.Models
 {
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Service
     {
-        [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("id")]
         public int? Id { get; set; }
 
         [JsonProperty("name")]
@@ -21,19 +22,19 @@ namespace Movidesk.Api.Client.Models
         public int? ParentServiceId { get; set; }
 
         [JsonProperty("serviceForTicketType")]
-        public TicketType ServiceForTicketType { get; set; }
+        public ServiceTicketType? ServiceForTicketType { get; set; }
 
         [JsonProperty("isVisible")]
-        public ServiceVisibility IsVisible { get; set; }
+        public ServiceVisibility? IsVisible { get; set; }
 
         [JsonProperty("allowSelection")]
-        public ServiceSelection AllowSelection { get; set; }
+        public ServiceSelection? AllowSelection { get; set; }
 
         [JsonProperty("allowFinishTicket")]
-        public bool AllowFinishTicket { get; set; }
+        public bool? AllowFinishTicket { get; set; }
 
         [JsonProperty("isActive")]
-        public bool IsActive { get; set; }
+        public bool? IsActive { get; set; }
 
         [JsonProperty("automationMacro")]
         public string AutomationMacro { get; set; }
@@ -45,9 +46,9 @@ namespace Movidesk.Api.Client.Models
         public string DefaultUrgency { get; set; }
 
         [JsonProperty("allowAllCategories")]
-        public bool AllowAllCategories { get; set; }
+        public bool? AllowAllCategories { get; set; }
 
         [JsonProperty("categories")]
-        public List<string> Categories { get; set; } = new List<string>();
+        public List<string> Categories { get; set; }
     }
 }

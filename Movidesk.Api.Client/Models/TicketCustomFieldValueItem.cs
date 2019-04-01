@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Movidesk.Api.Client.Models
 {
-    public class PersonCustomFieldValueItem
+    public class TicketCustomFieldValueItem
     {
         [JsonProperty("personId")]
         public int? PersonId { get; set; }

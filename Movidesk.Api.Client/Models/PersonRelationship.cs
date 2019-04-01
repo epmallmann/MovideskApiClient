@@ -17,18 +17,18 @@ namespace Movidesk.Api.Client.Models
         public string SlaAgreement { get; set; }
 
         [JsonProperty("forceChildrenToHaveSomeAgreement")]
-        public bool ForceChildrenToHaveSomeAgreement { get; set; }
+        public bool? ForceChildrenToHaveSomeAgreement { get; set; }
 
         [JsonProperty("allowAllServices")]
-        public bool AllowAllServices { get; set; }
+        public bool? AllowAllServices { get; set; }
 
         [JsonProperty("includeInParents")]
-        public bool IncludeInParents { get; set; }
+        public bool? IncludeInParents { get; set; }
 
         [JsonProperty("loadChildOrganizations")]
-        public bool LoadChildOrganizations { get; set; }
+        public bool? LoadChildOrganizations { get; set; }
 
         [JsonProperty("services")]
-        public List<PersonRelationshipService> Services { get; set; } = new List<PersonRelationshipService>();
+        public List<PersonRelationshipService> Services { get; set; }
     }
 }

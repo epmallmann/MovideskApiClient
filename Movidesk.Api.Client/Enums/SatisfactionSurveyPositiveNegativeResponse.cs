@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Movidesk.Api.Client.Enums
 {
-    public enum TicketType
+    public enum SatisfactionSurveyPositiveNegativeResponse
     {
-        Internal = 1,
-        Public = 2
+        Positive = 1,
+        Negative = 2
     }
 }

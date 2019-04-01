@@ -59,7 +59,7 @@ namespace Movidesk.Api.Client.Clients
         /// <param name="id">id service to update</param>
         /// <param name="service">the service object</param>
         /// <returns></returns>
-        public async Task<HttpResponseMessage> Patch(int id, object service)
+        public async Task<HttpResponseMessage> Patch(int id, Service service)
         {
             var result = await Patch($"&id={id}", service);
             return result;
