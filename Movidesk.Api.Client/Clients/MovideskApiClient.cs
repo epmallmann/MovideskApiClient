@@ -1,6 +1,7 @@
 ﻿using Movidesk.Api.Client.Http;
 using Movidesk.Api.Client.Models;
 using Movidesk.Api.Client.Utils;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -9,66 +10,87 @@ using System.Threading.Tasks;
 
 namespace Movidesk.Api.Client.Clients
 {
-    public class MovideskApiClient
+    public class MovideskApiClient : IMovideskApiClient
     {
         private readonly string _token;
         private readonly string _apiUrl = "https://api.movidesk.com/public/v1";
         private string _baseUrl;
 
-        public MovideskApiClient(MovideskApiClientOptions options, string url)
+        public MovideskApiClient(MovideskApiClientOptions options)
         {
             _token = options.Token;
-            _baseUrl = _apiUrl + url;
         }
 
-        internal async Task<ApiResponse<T>> Get<T>() where T : class
+        public void Configure(string resource)
         {
-            return await Get<T>(string.Empty);
+            _baseUrl = _apiUrl + resource;
         }
 
-        internal async Task<ApiResponse<T>> Get<T>(string query) where T : class
+        public async Task<ApiResponse<T>> Get<T>(string query) where T : class
         {
-            var url = $"{_baseUrl}?token={_token}{query??string.Empty}";
+            var requestUri = $"{_baseUrl}?token={_token}{query ?? string.Empty}";
 
-            var client = new BaseClient();
-            var result = await client.BaseGet<T>(url);
+            using (var httpClient = new HttpClient())
+            {
+                var response = await httpClient.GetAsync(requestUri);
+                var content = await response.Content.ReadAsStringAsync();
 
-            return result;
+                var result = new ApiResponse<T>
+                {
+                    InnerResponse = response,
+                    ResponseObject = response.IsSuccessStatusCode ? JsonConvert.DeserializeObject<T>(content) : null
+                };
+
+                return result;
+            }
         }
 
-        internal async Task<ApiResponse<T>> Post<T>(object content) where T : class
+        public async Task<ApiResponse<T>> Post<T>(string query, object content) where T : class
         {
-            return await Post<T>(string.Empty, content);
+            var requestUri = $"{_baseUrl}?token={_token}{query ?? string.Empty}";
+
+            using (var httpClient = new HttpClient())
+            {
+                var contentJson = JsonConvert.SerializeObject(content);
+
+                var response = await httpClient.PostAsync(requestUri, new StringContent(contentJson, Encoding.UTF8, "application/json"));
+                var contentResult = await response.Content.ReadAsStringAsync();
+
+                var result = new ApiResponse<T>
+                {
+                    InnerResponse = response,
+                    ResponseObject = response.IsSuccessStatusCode ? JsonConvert.DeserializeObject<T>(contentResult) : null
+                };
+
+                return result;
+            }
         }
 
-        internal async Task<ApiResponse<T>> Post<T>(string query, object content) where T : class
+        public async Task<HttpResponseMessage> Patch(string query, object content)
         {
-            var url = $"{_baseUrl}?token={_token}{query}";
+            var requestUri = $"{_baseUrl}?token={_token}{query ?? string.Empty}";
 
-            var client = new BaseClient();
-            var result = await client.BasePost<T>(url, content);
+            using (var httpClient = new HttpClient())
+            {
+                var contentJson = JsonConvert.SerializeObject(content);
+                var request = new HttpRequestMessage(new HttpMethod("PATCH"), requestUri)
+                {
+                    Content = new StringContent(contentJson, Encoding.UTF8, "application/json")
+                };
+                var response = await httpClient.SendAsync(request);
 
-            return result;
+                return response;
+            }
         }
 
-        internal async Task<HttpResponseMessage> Patch(string query, object content)
+        public async Task<HttpResponseMessage> Delete(object id)
         {
-            var url = $"{_baseUrl}?token={_token}{query}";
-
-            var client = new BaseClient();
-            var result = await client.BasePatch(url, content);
-
-            return result;
-        }
-
-        internal async Task<HttpResponseMessage> Delete(int id)
-        {
-            var url = $"{_baseUrl}?token={_token}&id={id}";
-
-            var client = new BaseClient();
-            var result = await client.BaseDelete(url);
-
-            return result;
+            var requestUri = $"{_baseUrl}?token={_token}&id={id}";
+            using (var httpClient = new HttpClient())
+            {
+                var response = await httpClient.DeleteAsync(requestUri);
+                return response;
+            }
         }
     }
 }

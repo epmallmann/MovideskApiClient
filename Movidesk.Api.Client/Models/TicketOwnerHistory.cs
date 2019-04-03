@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Movidesk.Api.Client.Models
 {
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class TicketOwnerHistory
     {
         [JsonProperty("ownerTeam")]

@@ -6,13 +6,14 @@ using System.Text;
 
 namespace Movidesk.Api.Client.Models
 {
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Ticket
     {
-        [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
-        public int Id { get; set; }
+        [JsonProperty("id")]
+        public int? Id { get; set; }
 
         [JsonProperty("type")]
-        public TicketType Type { get; set; }
+        public TicketType? Type { get; set; }
 
         [JsonProperty("subject")]
         public string Subject { get; set; }
@@ -33,10 +34,10 @@ namespace Movidesk.Api.Client.Models
         public string Justification { get; set; }
 
         [JsonProperty("origin")]
-        public TicketOrigin Origin { get; set; }
+        public TicketOrigin? Origin { get; set; }
 
         [JsonProperty("createdDate")]
-        public DateTime CreatedDate { get; set; }
+        public DateTime? CreatedDate { get; set; }
 
         [JsonProperty("originEmailAccount")]
         public string OriginEmailAccount { get; set; }
@@ -138,7 +139,7 @@ namespace Movidesk.Api.Client.Models
         public TicketPerson SlaSolutionChangedBy { get; set; }
 
         [JsonProperty("slaSolutionDate")]
-        public DateTime SlaSolutionDate { get; set; }
+        public DateTime? SlaSolutionDate { get; set; }
 
         [JsonProperty("slaSolutionDateIsPaused")]
         public bool? SlaSolutionDateIsPaused { get; set; }

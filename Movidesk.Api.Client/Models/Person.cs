@@ -16,13 +16,13 @@ namespace Movidesk.Api.Client.Models
         public string CodeReferenceAdditional { get; set; }
 
         [JsonProperty("isActive")]
-        public bool IsActive { get; set; }
+        public bool? IsActive { get; set; }
 
         [JsonProperty("personType")]
-        public PersonType PersonType { get; set; }
+        public PersonType? PersonType { get; set; }
 
         [JsonProperty("profileType")]
-        public ProfileType ProfileType { get; set; }
+        public ProfileType? ProfileType { get; set; }
 
         [JsonProperty("accessProfile")]
         public string AccessProfile { get; set; }
@@ -64,7 +64,7 @@ namespace Movidesk.Api.Client.Models
         public string AuthenticateOn { get; set; }
 
         [JsonProperty("createdDate")]
-        public DateTime CreatedDate { get; set; }
+        public DateTime? CreatedDate { get; set; }
 
         [JsonProperty("createdBy")]
         public string CreatedBy { get; set; }
