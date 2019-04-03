@@ -9,7 +9,7 @@ using Movidesk.Api.Client.Models;
 using Movidesk.Api.Client.Utils;
 
 namespace Movidesk.Api.Client.Resources
-{
+{   
     public class PersonResource : IPersonResource
     {
         private readonly IMovideskApiClient _apiClient;
