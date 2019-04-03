@@ -16,5 +16,8 @@ namespace Movidesk.Api.Client.Clients
 
         private Lazy<IServicesResource> ServicesLazy => new Lazy<IServicesResource>(() => new ServicesResource(_client));
         public IServicesResource Services => ServicesLazy.Value;
+
+        private Lazy<IPersonResource> PersonsLazy => new Lazy<IPersonResource>(() => new PersonResource(_client));
+        public IPersonResource Persons => PersonsLazy.Value;
     }
 }
