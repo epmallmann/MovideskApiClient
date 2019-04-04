@@ -19,7 +19,7 @@ namespace Movidesk.Api.Client.Resources
             _apiClient.Configure("/tickets");
         }
 
-        public async Task<ApiResponse<Ticket>> Get(int id, bool includeDeletedItems = false)
+        public async Task<ApiResponse<Ticket>> GetById(int id, bool includeDeletedItems = false)
         {
             var result = await _apiClient.Get<Ticket>($"&id={id}&includeDeletedItems={includeDeletedItems}");
             return result;
@@ -27,7 +27,7 @@ namespace Movidesk.Api.Client.Resources
 
         public async Task<ApiResponse<List<Ticket>>> Get(OData odata, bool includeDeletedItems = false)
         {
-            var result = await _apiClient.Get<List<Ticket>>($"&includeDeletedItems={includeDeletedItems}{odata?.ToString()}");
+            var result = await _apiClient.Get<List<Ticket>>($"&includeDeletedItems={includeDeletedItems}{odata.ToString()}");
             return result;
         }
 

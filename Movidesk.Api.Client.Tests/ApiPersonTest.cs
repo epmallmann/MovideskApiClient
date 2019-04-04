@@ -29,6 +29,17 @@ namespace Movidesk.Api.Client.Tests
         }
 
         [Fact]
+        public void GetByIdTest()
+        {
+            var client = GetClient();
+            var result = client.Persons.GetById("539639646").Result;
+
+            Assert.True(result.InnerResponse.IsSuccessStatusCode);
+            Assert.NotNull(result.ResponseObject);
+            Assert.Equal("539639646", result.ResponseObject.Id);
+        }
+
+        [Fact]
         public void GetODataTop1Test()
         {
             var client = GetClient();

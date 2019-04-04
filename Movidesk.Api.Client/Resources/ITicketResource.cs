@@ -9,7 +9,7 @@ namespace Movidesk.Api.Client.Resources
 {
     public interface ITicketResource
     {
-        Task<ApiResponse<Ticket>> Get(int id, bool includeDeletedItems = false);
+        Task<ApiResponse<Ticket>> GetById(int id, bool includeDeletedItems = false);
 
         Task<ApiResponse<List<Ticket>>> Get(OData odata, bool includeDeletedItems = false);
 

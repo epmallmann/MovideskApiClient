@@ -47,7 +47,7 @@ namespace Movidesk.Api.Client.Clients
 
         public async Task<ApiResponse<T>> Post<T>(string query, object content) where T : class
         {
-            var requestUri = $"{_baseUrl}?token={_token}{query ?? string.Empty}";
+            var requestUri = $"{_baseUrl}?token={_token}{query}";
 
             using (var httpClient = new HttpClient())
             {
@@ -68,7 +68,7 @@ namespace Movidesk.Api.Client.Clients
 
         public async Task<HttpResponseMessage> Patch(string query, object content)
         {
-            var requestUri = $"{_baseUrl}?token={_token}{query ?? string.Empty}";
+            var requestUri = $"{_baseUrl}?token={_token}{query}";
 
             using (var httpClient = new HttpClient())
             {
