@@ -8,6 +8,13 @@ Uma biblioteca em .netstandard para trabalhar com as APIs da Movidesk.
 * Person
 * Service
 
+## Como instalar
+
+Instale o [NuGet](https://docs.microsoft.com/pt-br/nuget/install-nuget-client-tools) e execute a partir do package manager console:
+```
+PM> Install-Package Movidesk.Api.Client
+```
+
 ## Criando o cliente
 
 ```c#
