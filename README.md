@@ -1,3 +1,5 @@
+[![NuGet](https://img.shields.io/badge/nuget-v1.0.0-blue.svg)](https://www.nuget.org/packages/Movidesk.Api.Client/)
+
 # Movidesk.Api.Client
 
 Uma biblioteca em .netstandard para trabalhar com as APIs da Movidesk.
