@@ -2,10 +2,23 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Eduardo Mallmann</Authors>
+    <Description>A .netstandard library to work with Movidesk APIs.</Description>
+    <PackageProjectUrl>https://github.com/epmallmann/MovideskApiClient</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/epmallmann/MovideskApiClient</RepositoryUrl>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <PackageTags>movidesk,api</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE.md">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
