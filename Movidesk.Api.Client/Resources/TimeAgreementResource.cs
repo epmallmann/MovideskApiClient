@@ -31,7 +31,7 @@ namespace Movidesk.Api.Client.Resources
             if (odata == null)
                 throw new ArgumentNullException("odata", "odata cannot be null");
             if (string.IsNullOrEmpty(odata.Select))
-                throw new ArgumentNullException("odata.select must be informed for this method");
+                throw new ArgumentNullException("odata", "odata.select must be informed for this method");
 
             var result = await _client.Get<List<TimeAgreement>>(odata.ToString());
             return result;
