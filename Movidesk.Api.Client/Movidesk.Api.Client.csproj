@@ -8,6 +8,8 @@
     <RepositoryUrl>https://github.com/epmallmann/MovideskApiClient</RepositoryUrl>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <PackageTags>movidesk,api</PackageTags>
+    <Version>1.1.0</Version>
+    <PackageReleaseNotes>TimeAgreement integration</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
