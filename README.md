@@ -9,6 +9,7 @@ Uma biblioteca em .netstandard para trabalhar com as APIs da Movidesk.
 * Ticket
 * Person
 * Service
+* TimeAgreement
 
 ## Como instalar
 
