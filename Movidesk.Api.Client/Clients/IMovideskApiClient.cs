@@ -14,6 +14,6 @@ namespace Movidesk.Api.Client.Clients
 
         Task<HttpResponseMessage> Patch(string query, object content);
 
-        Task<HttpResponseMessage> Delete(object id);
+        Task<HttpResponseMessage> Delete(object id, string field = "id");
     }
 }

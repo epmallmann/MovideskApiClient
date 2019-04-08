@@ -29,5 +29,11 @@ namespace Movidesk.Api.Client.Clients
         /// Interface of tickets
         /// </summary>
         public ITicketResource Tickets => TicketsLazy.Value;
+
+        private Lazy<ITimeAgreementResource> TimeAgreementsLazy => new Lazy<ITimeAgreementResource>(() => new TimeAgreementResource(_client));
+        /// <summary>
+        /// Interface of time agreements
+        /// </summary>
+        public ITimeAgreementResource TimeAgreements => TimeAgreementsLazy.Value;
     }
 }

@@ -83,9 +83,9 @@ namespace Movidesk.Api.Client.Clients
             }
         }
 
-        public async Task<HttpResponseMessage> Delete(object id)
+        public async Task<HttpResponseMessage> Delete(object id, string field = "id")
         {
-            var requestUri = $"{_baseUrl}?token={_token}&id={id}";
+            var requestUri = $"{_baseUrl}?token={_token}&{field}={id}";
             using (var httpClient = new HttpClient())
             {
                 var response = await httpClient.DeleteAsync(requestUri);
