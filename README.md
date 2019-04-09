@@ -166,22 +166,6 @@ var result = await client.Services.Post(new Service
 });
 ```
 
-### Criar um serviço (POST)
-```c#
-...
-var result = await client.Services.Post(new Service
-{
-    Name = "Serviço",
-    Description = "Desc",
-    IsVisible = ServiceVisibility.AgentAndClient,
-    ServiceForTicketType = ServiceTicketType.PublicAndInternal,
-    AllowSelection = ServiceSelection.AgentAndClient,
-    AllowFinishTicket = true,
-    IsActive = true,
-    AllowAllCategories = true
-});
-```
-
 ### Atualizar um serviço (PATCH)
 As atualizações são feitas informando somente os atributos que desejam ser atualizados. Neste exemplo somente o campo `Description` será atualizado.
 
