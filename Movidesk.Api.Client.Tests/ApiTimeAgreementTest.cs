@@ -19,14 +19,14 @@ namespace Movidesk.Api.Client.Tests
         }
 
         [Fact]
-        public void GetByNameTest()
+        public async void GetByNameTest()
         {
             var client = GetClient();
-            var result = client.TimeAgreements.GetByName("contrato").Result;
+            var result = await client.TimeAgreements.GetByName("contrato");
 
             Assert.True(result.InnerResponse.IsSuccessStatusCode);
             Assert.NotNull(result.ResponseObject);
-            Assert.Equal("Contrato", result.ResponseObject.Name);
+            Assert.Equal("contrato", result.ResponseObject.Name);
         }
 
         [Fact]
@@ -35,21 +35,19 @@ namespace Movidesk.Api.Client.Tests
             var client = GetClient();
 
             var exception = await Assert.ThrowsAsync<ArgumentNullException>(() => client.TimeAgreements.Get(null));
-            var expectedMessage = @"odata cannot be null
-Parameter name: odata";
+            var expectedMessage = @"odata cannot be null (Parameter 'odata')";
             Assert.Equal(expectedMessage, exception.Message);
 
             exception = await Assert.ThrowsAsync<ArgumentNullException>(() => client.TimeAgreements.Get(new OData { }));
-            expectedMessage = @"odata.select must be informed for this method
-Parameter name: odata";
+            expectedMessage = @"odata.select must be informed for this method (Parameter 'odata')";
             Assert.Equal(expectedMessage, exception.Message);
         }
 
         [Fact]
-        public void GetListTest()
+        public async void GetListTest()
         {
             var client = GetClient();
-            var result = client.TimeAgreements.Get(new OData { Select = "name" }).Result;
+            var result = await client.TimeAgreements.Get(new OData { Select = "name" });
 
             Assert.True(result.InnerResponse.IsSuccessStatusCode);
             Assert.NotNull(result.ResponseObject);
@@ -57,53 +55,53 @@ Parameter name: odata";
         }
 
         [Fact]
-        public void PostFailTest()
+        public async void PostFailTest()
         {
             var client = GetClient();
-            var result = client.TimeAgreements.Post(new TimeAgreement { }).Result;
+            var result = await client.TimeAgreements.Post(new TimeAgreement { });
 
             Assert.False(result.InnerResponse.IsSuccessStatusCode);
             Assert.Null(result.ResponseObject);
         }
 
         [Fact]
-        public void SimplePostTest()
+        public async void SimplePostTest()
         {
             var client = GetClient();
-            var result = client.TimeAgreements.Post(GetFakeTimeAgreement()).Result;
+            var result = await client.TimeAgreements.Post(GetFakeTimeAgreement());
 
             Assert.True(result.InnerResponse.IsSuccessStatusCode);
             Assert.NotNull(result.ResponseObject);
         }
 
         [Fact]
-        public void SimplePatchTest()
+        public async void SimplePatchTest()
         {
             var client = GetClient();
             var timeAgreement = GetFakeTimeAgreement();
 
-            var resultPost = client.TimeAgreements.Post(timeAgreement).Result;
+            var resultPost = await client.TimeAgreements.Post(timeAgreement);
 
             Assert.True(resultPost.InnerResponse.IsSuccessStatusCode);
             Assert.NotNull(resultPost.ResponseObject);
 
-            var result = client.TimeAgreements.Patch(timeAgreement.Name, new TimeAgreement { RenewalDay = 30 }).Result;
+            var result = await client.TimeAgreements.Patch(timeAgreement.Name, new TimeAgreement { RenewalDay = 30 });
 
             Assert.True(result.IsSuccessStatusCode);
         }
         
         [Fact]
-        public void DeleteTest()
+        public async void DeleteTest()
         {
             var client = GetClient();
             var timeAgreement = GetFakeTimeAgreement();
 
-            var resultPost = client.TimeAgreements.Post(timeAgreement).Result;
+            var resultPost = await client.TimeAgreements.Post(timeAgreement);
 
             Assert.True(resultPost.InnerResponse.IsSuccessStatusCode);
             Assert.NotNull(resultPost.ResponseObject);
 
-            var result = client.TimeAgreements.Delete(timeAgreement.Name).Result;
+            var result = await client.TimeAgreements.Delete(timeAgreement.Name);
             Assert.True(result.IsSuccessStatusCode);
         }
 
@@ -113,7 +111,7 @@ Parameter name: odata";
         {
             return new TimeAgreement
             {
-                Name = $"test_{Guid.NewGuid().ToString()}",
+                Name = $"test_{Guid.NewGuid()}",
                 DifferentiateHoursFranchise = false,
                 DifferentiateHoursConsumption = false,
                 AccumulateUnusedHours = true,
@@ -132,7 +130,7 @@ Parameter name: odata";
                 {
                     new TimeAgreementClient
                     {
-                        Id = "72100171"
+                        Id = "870921924"
                     }
                 }
             };

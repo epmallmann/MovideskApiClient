@@ -4,6 +4,7 @@ using Movidesk.Api.Client.Utils;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Movidesk.Api.Client.Tests
@@ -18,19 +19,19 @@ namespace Movidesk.Api.Client.Tests
         }
 
         [Fact]
-        public void GetAllNoSelectTest()
+        public async void GetAllNoSelectTest()
         {
             var client = GetClient();
-            var result = client.Tickets.Get(new OData { Select = "" }).Result;
+            var result = await client.Tickets.Get(new OData { Select = "" });
 
             Assert.False(result.InnerResponse.IsSuccessStatusCode);
         }
 
         [Fact]
-        public void GetAllIdTest()
+        public async void GetAllIdTest()
         {
             var client = GetClient();
-            var result = client.Tickets.Get(new OData { Select = "id" }).Result;
+            var result = await client.Tickets.Get(new OData { Select = "id" });
 
             Assert.True(result.InnerResponse.IsSuccessStatusCode);
             Assert.True(result.ResponseObject.Count > 0);
@@ -38,49 +39,56 @@ namespace Movidesk.Api.Client.Tests
         }
 
         [Fact]
-        public void GetByIdTest()
+        public async void GetByIdTest()
         {
             var client = GetClient();
-            var result = client.Tickets.GetById(3).Result;
+            var result = await client.Tickets.GetById(81);
 
             Assert.True(result.InnerResponse.IsSuccessStatusCode);
             Assert.NotNull(result.ResponseObject);
-            Assert.Equal(3, result.ResponseObject.Id.Value);
+            Assert.Equal(81, result.ResponseObject.Id.Value);
         }
 
         [Fact]
-        public void PostFailTest()
+        public async void PostFailTest()
         {
             var client = GetClient();
-            var result = client.Tickets.Post(new Ticket { }).Result;
+            var result = await client.Tickets.Post(new Ticket { });
 
             Assert.False(result.InnerResponse.IsSuccessStatusCode);
         }
 
         [Fact]
-        public Ticket SimplePostTest()
+        public async Task SimplePostTest()
         {
             var client = GetClient();
-            var result = client.Tickets.Post(GetFakeTicket()).Result;
+            var result = await client.Tickets.Post(GetFakeTicket());
+
+            Assert.True(result.InnerResponse.IsSuccessStatusCode);
+            Assert.NotNull(result.ResponseObject);
+            Assert.True(result.ResponseObject.Id.HasValue);
+        }
+
+        [Fact]
+        public async void SimplePatchTest()
+        {
+            var client = GetClient();
+            var result = await client.Tickets.Post(GetFakeTicket());
+
+            Console.WriteLine(result.InnerResponse.ToString());
 
             Assert.True(result.InnerResponse.IsSuccessStatusCode);
             Assert.NotNull(result.ResponseObject);
             Assert.True(result.ResponseObject.Id.HasValue);
 
-            return result.ResponseObject;
-        }
+            var ticket = result.ResponseObject;
 
-        [Fact]
-        public void SimplePatchTest()
-        {
-            var ticket = SimplePostTest();
+            ticket.Subject = $"test_alter_{Guid.NewGuid()}";
 
-            ticket.Subject = $"test_alter_{Guid.NewGuid().ToString()}";
+            client = GetClient();
+            var resultPatch = await client.Tickets.Patch(ticket.Id.Value, ticket);
 
-            var client = GetClient();
-            var result = client.Tickets.Patch(ticket.Id.Value, ticket).Result;
-
-            Assert.True(result.IsSuccessStatusCode);
+            Assert.True(resultPatch.IsSuccessStatusCode);
         }
 
         private MovideskClient GetClient() => new MovideskClient(new MovideskApiClient(_options));
@@ -89,21 +97,21 @@ namespace Movidesk.Api.Client.Tests
         {
             return new Ticket
             {
-                Subject = $"test_{Guid.NewGuid().ToString()}",
+                Subject = $"test_{Guid.NewGuid()}",
                 Type = Enums.TicketType.Internal,
-                CreatedBy = new TicketPerson { Id = "539639646" },
-                Owner = new TicketPerson { Id = "539639646" },
+                CreatedBy = new TicketPerson { Id = "1589544980" },
+                Owner = new TicketPerson { Id = "1589544980" },
                 OwnerTeam = "Administradores",
                 Actions = new List<TicketAction>
                 {
                     new TicketAction {
-                        Description = $"test_{Guid.NewGuid().ToString()}",
+                        Description = $"test_{Guid.NewGuid()}",
                         Type = Enums.TicketType.Internal
                     }
                 },
                 Clients = new List<TicketClient>
                 {
-                    new TicketClient { Id = "539639646" }
+                    new TicketClient { Id = "1589544980" }
                 }
             };
         }

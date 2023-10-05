@@ -19,20 +19,20 @@ namespace Movidesk.Api.Client.Tests
         }
 
         [Fact]
-        public void GetAllTest()
+        public async void GetAllTest()
         {
             var client = GetClient();
-            var result = client.Persons.Get().Result;
+            var result = await client.Persons.Get();
 
             Assert.True(result.InnerResponse.IsSuccessStatusCode);
             Assert.IsType<List<Person>>(result.ResponseObject);
         }
 
         [Fact]
-        public void GetByIdTest()
+        public async void GetByIdTest()
         {
             var client = GetClient();
-            var result = client.Persons.GetById("539639646").Result;
+            var result = await client.Persons.GetById("539639646");
 
             Assert.True(result.InnerResponse.IsSuccessStatusCode);
             Assert.NotNull(result.ResponseObject);
@@ -40,10 +40,10 @@ namespace Movidesk.Api.Client.Tests
         }
 
         [Fact]
-        public void GetODataTop1Test()
+        public async void GetODataTop1Test()
         {
             var client = GetClient();
-            var result = client.Persons.Get(new OData { Top = 1 }).Result;
+            var result = await client.Persons.Get(new OData { Top = 1 });
 
             Assert.True(result.InnerResponse.IsSuccessStatusCode);
             Assert.IsType<List<Person>>(result.ResponseObject);
@@ -51,10 +51,10 @@ namespace Movidesk.Api.Client.Tests
         }
 
         [Fact]
-        public void GetODataSelectTest()
+        public async void GetODataSelectTest()
         {
             var client = GetClient();
-            var result = client.Persons.Get(new OData { Select = "corporateName,id" }).Result;
+            var result = await client.Persons.Get(new OData { Select = "corporateName,id" });
 
             Assert.True(result.InnerResponse.IsSuccessStatusCode);
             Assert.IsType<List<Person>>(result.ResponseObject);
@@ -62,21 +62,21 @@ namespace Movidesk.Api.Client.Tests
         }
 
         [Fact]
-        public void SimplePostTest()
+        public async void SimplePostTest()
         {
             var client = GetClient();
-            var result = client.Persons.Post(GetFakePerson()).Result;
+            var result = await client.Persons.Post(GetFakePerson());
 
             Assert.True(result.InnerResponse.IsSuccessStatusCode);
             Assert.True(!string.IsNullOrEmpty(result.ResponseObject.Id));
         }
 
         [Fact]
-        public void CompletePostTest()
+        public async void CompletePostTest()
         {
             var client = GetClient();
             var person = GetCompleteFakePerson();
-            var result = client.Persons.Post(person).Result;
+            var result = await client.Persons.Post(person);
 
             var json = JsonConvert.SerializeObject(person);
 
@@ -85,37 +85,37 @@ namespace Movidesk.Api.Client.Tests
         }
 
         [Fact]
-        public void PostFailTest()
+        public async void PostFailTest()
         {
             var client = GetClient();
-            var result = client.Persons.Post(new Person { }).Result;
+            var result = await client.Persons.Post(new Person { });
 
             Assert.False(result.InnerResponse.IsSuccessStatusCode);
         }
 
         [Fact]
-        public void PatchTest()
+        public async void PatchTest()
         {
             var client = GetClient();
-            var result = client.Persons.Post(GetFakePerson()).Result;
+            var result = await client.Persons.Post(GetFakePerson());
 
             Assert.True(result.InnerResponse.IsSuccessStatusCode);
             Assert.True(!string.IsNullOrEmpty(result.ResponseObject.Id));
 
-            var result2 = client.Persons.Patch(result.ResponseObject.Id, new Person { BusinessName = $"test2_{Guid.NewGuid().ToString()}" }).Result;
+            var result2 = await client.Persons.Patch(result.ResponseObject.Id, new Person { BusinessName = $"test2_{Guid.NewGuid().ToString()}" });
             Assert.True(result2.IsSuccessStatusCode);
         }
 
         [Fact]
-        public void DeleteTest()
+        public async void DeleteTest()
         {
             var client = GetClient();
-            var result = client.Persons.Post(GetFakePerson()).Result;
+            var result = await client.Persons.Post(GetFakePerson());
 
             Assert.True(result.InnerResponse.IsSuccessStatusCode);
             Assert.True(!string.IsNullOrEmpty(result.ResponseObject.Id));
 
-            var result2 = client.Persons.Delete(result.ResponseObject.Id).Result;
+            var result2 = await client.Persons.Delete(result.ResponseObject.Id);
             Assert.True(result2.IsSuccessStatusCode);
         }
 
